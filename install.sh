@@ -63,6 +63,13 @@ echo "==> Installed ${tag}."
 if gnome-extensions info "$UUID" >/dev/null 2>&1; then
     gnome-extensions enable "$UUID" && echo "==> Enabled."
 else
-    echo "==> Log out and back in (Wayland), then run:"
-    echo "    gnome-extensions enable ${UUID}"
+    # GNOME Shell on Wayland only sees new extensions at login. Put it in
+    # the enabled list now, so it starts at the next login by itself.
+    current=$(gsettings get org.gnome.shell enabled-extensions)
+    case "$current" in
+        *"'${UUID}'"*) ;;
+        "@as []"|"[]") gsettings set org.gnome.shell enabled-extensions "['${UUID}']" ;;
+        *) gsettings set org.gnome.shell enabled-extensions "${current%]}, '${UUID}']" ;;
+    esac
+    echo "==> Enabled for your next login. Log out and back in to see Tacho in the top bar."
 fi
