@@ -1,0 +1,9 @@
+{
+  "name": "tacho-gnome",
+  "private": true,
+  "type": "module",
+  "description": "Dev-only: runs the parser tests with Node. Not part of the extension.",
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  }
+}

@@ -1,0 +1,6 @@
+{"type":"user","timestamp":"__TODAY__T09:00:00.000Z","message":{"role":"user","content":"hi"}}
+{"type":"assistant","timestamp":"__TODAY__T09:00:01.000Z","message":{"id":"msg_1","model":"claude-opus-4-5","usage":{"input_tokens":10,"output_tokens":5,"cache_creation_input_tokens":1000,"cache_read_input_tokens":20000}}}
+{"type":"assistant","timestamp":"__TODAY__T09:00:02.000Z","message":{"id":"msg_1","model":"claude-opus-4-5","usage":{"input_tokens":10,"output_tokens":250,"cache_creation_input_tokens":1000,"cache_read_input_tokens":20000}}}
+{"type":"assistant","timestamp":"__TODAY__T09:01:00.000Z","message":{"id":"msg_2","model":"claude-opus-4-5","usage":{"input_tokens":3,"output_tokens":100,"cache_creation_input_tokens":0,"cache_read_input_tokens":21000}}}
+{"type":"assistant","timestamp":"__YESTERDAY__T09:01:00.000Z","message":{"id":"msg_0","model":"claude-opus-4-5","usage":{"input_tokens":99999,"output_tokens":99999}}}
+{"type":"assistant","timestamp":"__TODAY__T09:02:00.000Z","message":{"id":"msg_3","model":"<synthetic>","usage":{"input_tokens":0,"output_tokens":0}}}

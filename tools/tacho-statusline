@@ -1,0 +1,94 @@
+#!/usr/bin/env bash
+# tacho-statusline: a Claude Code statusLine command for Tacho.
+#
+# Claude Code runs it after each response with the session's state as JSON
+# on standard input. It saves the plan's 5-hour and 7-day limits to
+# ~/.claude/tacho-usage.json, where Tacho reads them, and prints a short
+# status line for the terminal.
+#
+# Set it in ~/.claude/settings.json:
+#   "statusLine": {"type": "command", "command": "~/.local/bin/tacho-statusline"}
+#
+# Already have a statusLine of your own? Keep it: put its command in
+# TACHO_STATUSLINE_NEXT (or in ~/.claude/tacho-statusline-next), and this
+# script runs it with the same input and prints its output instead of its
+# own line. For example:
+#   "command": "TACHO_STATUSLINE_NEXT='~/bin/my-line' ~/.local/bin/tacho-statusline"
+#
+# Needs python3 (installed on Ubuntu by default). Never fails Claude Code:
+# on any error it prints nothing rather than an error.
+
+set -u
+
+input=$(cat)
+claude_dir=${CLAUDE_CONFIG_DIR:-$HOME/.claude}
+
+line=$(printf '%s' "$input" | CLAUDE_DIR="$claude_dir" python3 -c '
+import json, os, sys, tempfile, time
+
+try:
+    data = json.load(sys.stdin)
+except Exception:
+    data = {}
+if not isinstance(data, dict):
+    data = {}
+
+model = (data.get("model") or {}).get("display_name")
+context = (data.get("context_window") or {}).get("used_percentage")
+limits = data.get("rate_limits") or {}
+
+parts, windows = [], []
+if model:
+    parts.append(str(model))
+if isinstance(context, (int, float)):
+    parts.append("ctx %.0f%%" % context)
+for key, label in (("five_hour", "5h"), ("seven_day", "7d")):
+    window = limits.get(key) or {}
+    used = window.get("used_percentage")
+    if not isinstance(used, (int, float)):
+        continue
+    entry = {"label": label, "used": used}
+    reset = window.get("resets_at")
+    if isinstance(reset, (int, float)):
+        entry["resets_at"] = reset
+    windows.append(entry)
+    parts.append("%s %.0f%%" % (label, used))
+
+# Limits arrive only after a session has had a response; keep the last ones
+# rather than wiping them with an empty update.
+if windows:
+    snapshot = {"windows": windows, "updated": time.time()}
+    if model:
+        snapshot["model"] = model
+    folder = os.environ["CLAUDE_DIR"]
+    try:
+        os.makedirs(folder, exist_ok=True)
+        fd, tmp = tempfile.mkstemp(dir=folder, prefix=".tacho-usage.")
+        with os.fdopen(fd, "w") as f:
+            json.dump(snapshot, f)
+        os.replace(tmp, os.path.join(folder, "tacho-usage.json"))
+    except Exception:
+        pass
+
+print(" · ".join(parts))
+' 2>/dev/null)
+
+next=${TACHO_STATUSLINE_NEXT:-}
+if [ -z "$next" ] && [ -r "$claude_dir/tacho-statusline-next" ]; then
+    next=$(head -n 1 "$claude_dir/tacho-statusline-next")
+fi
+
+if [ -n "$next" ]; then
+    # The other statusLine gets the same input, for up to 5 seconds.
+    if command -v timeout >/dev/null 2>&1; then
+        output=$(printf '%s' "$input" | timeout 5 sh -c "$next" 2>/dev/null)
+    else
+        output=$(printf '%s' "$input" | sh -c "$next" 2>/dev/null)
+    fi
+    if [ -n "$output" ]; then
+        printf '%s\n' "$output"
+        exit 0
+    fi
+fi
+
+printf '%s\n' "$line"

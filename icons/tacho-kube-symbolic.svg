@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <path fill="#2e3436" fill-rule="evenodd" d="M8 3.2a4.8 4.8 0 1 1 0 9.6a4.8 4.8 0 1 1 0-9.6zM8 4.6a3.4 3.4 0 1 0 0 6.8a3.4 3.4 0 1 0 0-6.8z"/>
+  <circle fill="#2e3436" cx="8" cy="8" r="1.6"/>
+  <rect fill="#2e3436" x="7.4" y="0.6" width="1.2" height="7" transform="rotate(0 8 8)"/>
+  <circle fill="#2e3436" cx="8" cy="1.2" r="1.1" transform="rotate(0 8 8)"/>
+  <rect fill="#2e3436" x="7.4" y="0.6" width="1.2" height="7" transform="rotate(45 8 8)"/>
+  <circle fill="#2e3436" cx="8" cy="1.2" r="1.1" transform="rotate(45 8 8)"/>
+  <rect fill="#2e3436" x="7.4" y="0.6" width="1.2" height="7" transform="rotate(90 8 8)"/>
+  <circle fill="#2e3436" cx="8" cy="1.2" r="1.1" transform="rotate(90 8 8)"/>
+  <rect fill="#2e3436" x="7.4" y="0.6" width="1.2" height="7" transform="rotate(135 8 8)"/>
+  <circle fill="#2e3436" cx="8" cy="1.2" r="1.1" transform="rotate(135 8 8)"/>
+  <rect fill="#2e3436" x="7.4" y="0.6" width="1.2" height="7" transform="rotate(180 8 8)"/>
+  <circle fill="#2e3436" cx="8" cy="1.2" r="1.1" transform="rotate(180 8 8)"/>
+  <rect fill="#2e3436" x="7.4" y="0.6" width="1.2" height="7" transform="rotate(225 8 8)"/>
+  <circle fill="#2e3436" cx="8" cy="1.2" r="1.1" transform="rotate(225 8 8)"/>
+  <rect fill="#2e3436" x="7.4" y="0.6" width="1.2" height="7" transform="rotate(270 8 8)"/>
+  <circle fill="#2e3436" cx="8" cy="1.2" r="1.1" transform="rotate(270 8 8)"/>
+  <rect fill="#2e3436" x="7.4" y="0.6" width="1.2" height="7" transform="rotate(315 8 8)"/>
+  <circle fill="#2e3436" cx="8" cy="1.2" r="1.1" transform="rotate(315 8 8)"/>
+</svg>

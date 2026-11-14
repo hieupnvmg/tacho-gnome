@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="tacho@hieupnvmg.github.io">
+  <schema id="org.gnome.shell.extensions.tacho" path="/org/gnome/shell/extensions/tacho/">
+    <key name="display-mode" type="s">
+      <choices>
+        <choice value="combined"/>
+        <choice value="separate-graphs"/>
+        <choice value="separate"/>
+      </choices>
+      <default>'combined'</default>
+      <summary>How readings appear in the top bar</summary>
+      <description>combined: one item, a column per reading with a faint graph behind it; separate-graphs: an item per reading with a small graph; separate: an item per reading, icon and value only.</description>
+    </key>
+    <key name="panel-position" type="s">
+      <choices>
+        <choice value="left"/>
+        <choice value="center"/>
+        <choice value="right"/>
+      </choices>
+      <default>'right'</default>
+      <summary>Which part of the top bar Tacho sits in</summary>
+    </key>
+    <key name="update-interval" type="u">
+      <range min="1" max="5"/>
+      <default>2</default>
+      <summary>Seconds between CPU, memory and network readings (1, 2 or 5)</summary>
+    </key>
+    <key name="show-cpu" type="b">
+      <default>true</default>
+      <summary>Show CPU usage</summary>
+    </key>
+    <key name="show-temp" type="b">
+      <default>true</default>
+      <summary>Show CPU temperature next to CPU usage</summary>
+    </key>
+    <key name="show-ram" type="b">
+      <default>true</default>
+      <summary>Show memory usage</summary>
+    </key>
+    <key name="show-net" type="b">
+      <default>true</default>
+      <summary>Show network download and upload rates</summary>
+    </key>
+    <key name="show-ai" type="b">
+      <default>true</default>
+      <summary>Show the highest Claude Code or Codex limit</summary>
+    </key>
+    <key name="show-docker" type="b">
+      <default>true</default>
+      <summary>Show the number of running Docker containers</summary>
+    </key>
+    <key name="show-kube" type="b">
+      <default>true</default>
+      <summary>Show the Kubernetes wheel, red for production contexts</summary>
+    </key>
+    <key name="notify-ai" type="b">
+      <default>true</default>
+      <summary>Notify at 80% and 95% of an AI limit window</summary>
+    </key>
+    <key name="notify-vpn" type="b">
+      <default>true</default>
+      <summary>Notify when a VPN connects or disconnects</summary>
+    </key>
+    <key name="ai-alerts-sent" type="as">
+      <default>[]</default>
+      <summary>Internal: AI limit alerts already sent, so they are not repeated</summary>
+    </key>
+  </schema>
+</schemalist>

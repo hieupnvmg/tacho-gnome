@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="120" viewBox="0 0 800 120">
+  <rect width="800" height="120" rx="10" fill="#242424"/>
+  <rect x="1" y="1" width="798" height="118" rx="10" fill="none" stroke="#555" stroke-dasharray="6 6"/>
+  <text x="400" y="56" fill="#ddd" font-family="Ubuntu, Cantarell, sans-serif" font-size="22" text-anchor="middle">Separate items with graphs</text>
+  <text x="400" y="86" fill="#999" font-family="Ubuntu, Cantarell, sans-serif" font-size="15" text-anchor="middle">Screenshot placeholder — to be replaced with a capture from Ubuntu</text>
+</svg>

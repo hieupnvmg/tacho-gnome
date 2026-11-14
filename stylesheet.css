@@ -1,0 +1,235 @@
+/* Tacho for GNOME. Colours follow the macOS app: amber #eda340 for
+   warnings, red #e35959 for critical, memory green #73bd70. Secondary
+   text is dimmed with actor opacity in the code rather than a fixed
+   colour here, so it reads on both dark and light shell themes. */
+
+.tacho-button {
+  -natural-hpadding: 4px;
+  -minimum-hpadding: 2px;
+}
+
+/* ---------- Combined: a column per reading */
+
+.tacho-combined {
+  spacing: 2px;
+}
+
+.tacho-column {
+  min-width: 34px;
+  padding: 0 3px;
+  border-radius: 4px;
+}
+
+.tacho-column-net {
+  min-width: 44px;
+}
+
+.tacho-column-box {
+  spacing: 0;
+}
+
+.tacho-column-title {
+  font-size: 7.5pt;
+  font-weight: bold;
+  font-feature-settings: "tnum";
+}
+
+.tacho-column-row {
+  spacing: 3px;
+}
+
+.tacho-column-value {
+  font-size: 9pt;
+  font-weight: bold;
+  font-feature-settings: "tnum";
+}
+
+.tacho-column .tacho-kube {
+  icon-size: 11px;
+}
+
+/* ---------- Separate items */
+
+.tacho-separate {
+  spacing: 0;
+}
+
+.tacho-inline {
+  spacing: 4px;
+}
+
+.tacho-inline-value {
+  font-feature-settings: "tnum";
+}
+
+.tacho-icon {
+  icon-size: 14px;
+}
+
+.tacho-sparkline {
+  width: 30px;
+  height: 16px;
+}
+
+/* ---------- Levels */
+
+.tacho-warning,
+.tacho-temp.tacho-warning {
+  color: #eda340;
+}
+
+.tacho-critical,
+.tacho-temp.tacho-critical,
+.tacho-kube.tacho-critical,
+.tacho-column-title.tacho-critical {
+  color: #e35959;
+  font-weight: bold;
+}
+
+/* ---------- Menu */
+
+.tacho-header-item {
+  spacing: 6px;
+  padding-top: 6px;
+  padding-bottom: 2px;
+}
+
+.tacho-header {
+  font-weight: bold;
+}
+
+.tacho-header-icon {
+  icon-size: 14px;
+}
+
+.tacho-header-detail {
+  font-size: 9pt;
+  text-align: right;
+}
+
+.tacho-info-item {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.tacho-info-label {
+  min-width: 120px;
+}
+
+.tacho-info-value {
+  font-feature-settings: "tnum";
+  text-align: right;
+  padding-left: 16px;
+}
+
+.tacho-note {
+  font-size: 9pt;
+  max-width: 340px;
+}
+
+.tacho-menu-graph {
+  height: 40px;
+  min-width: 300px;
+}
+
+.tacho-bar-item {
+  spacing: 8px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.tacho-bar-label {
+  min-width: 24px;
+  font-feature-settings: "tnum";
+}
+
+.tacho-bar {
+  width: 120px;
+  height: 6px;
+  border-radius: 3px;
+  background-color: rgba(127, 127, 127, 0.3);
+}
+
+.tacho-bar-fill {
+  height: 6px;
+  border-radius: 3px;
+  background-color: #4f8ff2;
+}
+
+.tacho-bar-fill.tacho-warning {
+  background-color: #eda340;
+}
+
+.tacho-bar-fill.tacho-critical {
+  background-color: #e35959;
+}
+
+.tacho-bar-percent {
+  min-width: 36px;
+  text-align: right;
+  font-feature-settings: "tnum";
+}
+
+.tacho-bar-reset {
+  font-size: 9pt;
+  text-align: right;
+}
+
+.tacho-context-item {
+  spacing: 8px;
+}
+
+.tacho-context-name {
+  font-family: monospace;
+  font-weight: bold;
+}
+
+.tacho-badge {
+  font-size: 7.5pt;
+  font-weight: 800;
+  color: #ffffff;
+  background-color: #e35959;
+  border-radius: 8px;
+  padding: 1px 6px;
+}
+
+.tacho-container-item {
+  spacing: 8px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.tacho-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
+  background-color: rgba(127, 127, 127, 0.5);
+}
+
+.tacho-dot-on {
+  background-color: #73bd70;
+}
+
+.tacho-container-name {
+  font-weight: 500;
+}
+
+.tacho-container-image,
+.tacho-container-memory {
+  font-size: 8.5pt;
+  font-feature-settings: "tnum";
+}
+
+.tacho-icon-button {
+  padding: 4px;
+  border-radius: 99px;
+}
+
+.tacho-icon-button:hover,
+.tacho-icon-button:focus {
+  background-color: rgba(127, 127, 127, 0.25);
+}
+
+.tacho-icon-button .popup-menu-icon {
+  icon-size: 12px;
+}
