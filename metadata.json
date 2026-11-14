@@ -1,7 +1,7 @@
 {
   "uuid": "tacho@hieupnvmg.github.io",
   "name": "Tacho",
-  "description": "Gauges in the top bar: CPU and temperature, memory, network, your Claude Code and Codex limits, Docker containers and the Kubernetes context (red when it points at production).\n\nThree layouts: one combined item with graphs, separate items with graphs, or separate items without. Everything is read locally from /proc, /sys, the assistants' session logs, the Docker socket and ~/.kube/config. Nothing is sent anywhere.",
+  "description": "Gauges in the top bar: CPU and temperature, GPU, memory, network, your Claude Code and Codex limits, Docker containers and the Kubernetes context (red when it points at production).\n\nThree layouts: one combined item with graphs, separate items with graphs, or separate items without. Everything is read locally from /proc, /sys, the assistants' session logs, the Docker socket and ~/.kube/config. Nothing is sent anywhere.",
   "shell-version": [
     "45",
     "46",

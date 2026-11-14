@@ -12,6 +12,7 @@ import * as P from './lib/parsers.js';
 import {AiWatcher} from './lib/ai.js';
 import {InfraWatcher} from './lib/infra.js';
 import {KeepAwake} from './lib/awake.js';
+import {GpuSampler} from './lib/gpu.js';
 import {SystemSampler} from './lib/system.js';
 import {TachoButton, enabledReadings} from './lib/panel.js';
 
@@ -23,7 +24,7 @@ const SYSTEM_MONITORS = [
 ];
 
 const LAYOUT_KEYS = new Set([
-    'display-mode', 'panel-position', 'show-cpu', 'show-temp', 'show-ram', 'show-net',
+    'display-mode', 'panel-position', 'show-cpu', 'show-temp', 'show-gpu', 'show-ram', 'show-net',
     'show-ai', 'show-docker', 'show-kube',
 ]);
 
@@ -41,6 +42,7 @@ class Tacho {
         this._sent = new Set(this.settings.get_strv('ai-alerts-sent'));
 
         this.sampler = new SystemSampler();
+        this.gpu = new GpuSampler();
         this.ai = new AiWatcher(() => this._onAi());
         this.infra = new InfraWatcher(() => this._update());
         this.keepAwake = new KeepAwake(_('Keep awake is on in Tacho'));
@@ -229,7 +231,10 @@ class Tacho {
             load: cpu && this._openMenus > 0,
         };
         try {
-            await this.sampler.sample(want, this._cancellable);
+            const jobs = [this.sampler.sample(want, this._cancellable)];
+            if (s.get_boolean('show-gpu'))
+                jobs.push(this.gpu.sample(this._openMenus > 0, this._cancellable));
+            await Promise.all(jobs);
         } finally {
             this._sampling = false;
         }
@@ -315,6 +320,7 @@ class Tacho {
         this.ai = null;
         this.infra = null;
         this.sampler = null;
+        this.gpu = null;
         this.keepAwake = null;
         this.settings = null;
     }

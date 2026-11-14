@@ -2,7 +2,7 @@
 
 <p align="center">
   <b>Gauges in the Ubuntu / GNOME top bar.</b><br>
-  CPU and temperature, memory, network, your Claude Code and Codex limits, Docker containers and the Kubernetes context.
+  CPU and temperature, GPU, memory, network, your Claude Code and Codex limits, Docker containers and the Kubernetes context.
 </p>
 
 <p align="center">
@@ -26,6 +26,7 @@ Tacho for GNOME is the Ubuntu counterpart of [Tacho for macOS](https://github.co
 | Reading | In the top bar | In the menu |
 |---|---|---|
 | **CPU** | usage %, temperature (amber from 70 °C, red from 90 °C) | graph, temperature, load average |
+| **GPU** | usage % and temperature of the busiest GPU | graph; each GPU's usage, frequency, video memory, temperature, power. A sleeping NVIDIA card on a hybrid laptop is shown as asleep, never woken |
 | **Memory** | used % | graph, used / total, available, swap |
 | **Network** | download and upload rate | graph, rates, VPN interfaces that are up |
 | **AI** | the highest Claude Code or Codex limit window | 5-hour and 7-day bars with reset times, tokens today |
@@ -135,6 +136,7 @@ Then in `~/.claude/settings.json`:
 Everything is read locally; Tacho sends nothing anywhere. The only network request is the update check (GitHub build only, can be turned off).
 
 - **CPU** `/proc/stat`, **memory** `/proc/meminfo` (MemAvailable), **network** `/proc/net/dev` (all interfaces except `lo`).
+- **GPU** Intel: idle time (RC6 / gtidle) in `/sys/class/drm`; AMD: `gpu_busy_percent`, VRAM and hwmon; NVIDIA: `nvidia-smi`, only while the card is awake (its `runtime_status`), at most every 10 s with the menu closed.
 - **Temperature** `/sys/class/hwmon` — `coretemp` package, `k10temp`/`zenpower` Tctl — falling back to `/sys/class/thermal`.
 - **VPN** interfaces named `tun*`, `wg*`, `ppp*`, `tailscale*` and similar in `/sys/class/net` that are up, with `/proc/net/route`.
 - **Codex** `~/.codex/sessions/**/*.jsonl` (`token_count` events). **Claude Code** `~/.claude/projects/**/*.jsonl` (each response counted once) and `~/.claude/tacho-usage.json`. Logs are read incrementally once a minute, only the new bytes.
@@ -170,6 +172,7 @@ Tacho for GNOME là bản Ubuntu của [Tacho cho macOS](https://github.com/hieu
 | Chỉ số | Trên thanh trên cùng | Trong menu |
 |---|---|---|
 | **CPU** | % sử dụng, nhiệt độ (vàng cam từ 70 °C, đỏ từ 90 °C) | biểu đồ, nhiệt độ, tải trung bình |
+| **GPU** | % sử dụng và nhiệt độ của GPU bận nhất | biểu đồ; từng GPU: % sử dụng, xung nhịp, bộ nhớ đồ hoạ, nhiệt độ, công suất. Card NVIDIA đang ngủ trên laptop hybrid chỉ hiện "Đang ngủ", không bị đánh thức |
 | **Bộ nhớ** | % đã dùng | biểu đồ, đã dùng / tổng, còn trống, swap |
 | **Mạng** | tốc độ tải xuống và tải lên | biểu đồ, tốc độ, các VPN đang bật |
 | **AI** | khung hạn mức cao nhất của Claude Code hoặc Codex | thanh 5 giờ và 7 ngày kèm giờ đặt lại, token hôm nay |

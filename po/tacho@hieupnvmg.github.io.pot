@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tacho-gnome\n"
 "Report-Msgid-Bugs-To: https://github.com/hieupnvmg/tacho-gnome/issues\n"
-"POT-Creation-Date: 2026-11-14 08:01+0700\n"
+"POT-Creation-Date: 2026-11-14 08:42+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,69 +16,69 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: extension.js:46
+#: extension.js:48
 msgid "Keep awake is on in Tacho"
 msgstr ""
 
-#: extension.js:88
+#: extension.js:90
 msgid "Tacho"
 msgstr ""
 
-#: extension.js:88
+#: extension.js:90
 msgid "GNOME System Monitor is not installed."
 msgstr ""
 
-#: extension.js:158
+#: extension.js:160
 #, javascript-format
 msgid "Tacho %s is available"
 msgstr ""
 
-#: extension.js:159
+#: extension.js:161
 msgid "Open the Tacho menu and choose “Update Tacho” to install it."
 msgstr ""
 
-#: extension.js:161
+#: extension.js:163
 #, javascript-format
 msgid "Tacho %s installed"
 msgstr ""
 
-#: extension.js:162
+#: extension.js:164
 msgid "Log out and back in to start using it."
 msgstr ""
 
-#: extension.js:164
+#: extension.js:166
 msgid "Tacho could not update"
 msgstr ""
 
-#: extension.js:258
+#: extension.js:263
 msgid "VPN connected"
 msgstr ""
 
-#: extension.js:258
+#: extension.js:263
 #, javascript-format
 msgid "%s is up."
 msgstr ""
 
-#: extension.js:260
+#: extension.js:265
 msgid "VPN disconnected"
 msgstr ""
 
-#: extension.js:260
+#: extension.js:265
 #, javascript-format
 msgid "%s went down."
 msgstr ""
 
 #. Translators: e.g. "Claude Code: 82% of the 5h limit used".
-#: extension.js:280
+#: extension.js:285
 #, javascript-format
 msgid "%s: %d%% of the %s limit used"
 msgstr ""
 
-#: extension.js:282
+#: extension.js:287
 msgid "Almost out. It resets on its own when the window ends."
 msgstr ""
 
-#: extension.js:283
+#: extension.js:288
 #, javascript-format
 msgid "Past %d%%. Tacho will tell you again at 95%%."
 msgstr ""
@@ -151,107 +151,116 @@ msgstr ""
 msgid "Readings"
 msgstr ""
 
-#: prefs.js:55 lib/menu.js:177 lib/panel.js:47
+#: prefs.js:55 lib/menu.js:177 lib/panel.js:49
 msgid "CPU"
 msgstr ""
 
-#: prefs.js:56
-msgid "CPU temperature"
+#: prefs.js:56 lib/menu.js:180 lib/menu.js:216
+msgid "Temperature"
 msgstr ""
 
 #: prefs.js:57
 msgid "Amber from 70 °C, red from 90 °C"
 msgstr ""
 
-#: prefs.js:58 lib/menu.js:199 lib/menu.js:326
-msgid "Memory"
-msgstr ""
-
-#: prefs.js:59 lib/menu.js:223
-msgid "Network"
+#: prefs.js:58 lib/menu.js:199 lib/panel.js:62
+msgid "GPU"
 msgstr ""
 
 #: prefs.js:59
-msgid "Download and upload, VPN in the menu"
+msgid ""
+"Intel, AMD and NVIDIA. A sleeping NVIDIA card on a laptop is left asleep"
 msgstr ""
 
-#: prefs.js:60 prefs.js:69
-msgid "AI limits"
+#: prefs.js:60 lib/menu.js:262 lib/menu.js:389
+msgid "Memory"
+msgstr ""
+
+#: prefs.js:61 lib/menu.js:286
+msgid "Network"
 msgstr ""
 
 #: prefs.js:61
+msgid "Download and upload, VPN in the menu"
+msgstr ""
+
+#: prefs.js:62 prefs.js:71
+msgid "AI limits"
+msgstr ""
+
+#: prefs.js:63
 msgid "Highest Claude Code or Codex window, from their local logs"
 msgstr ""
 
-#: prefs.js:62
+#: prefs.js:64
 msgid "Docker"
 msgstr ""
 
-#: prefs.js:62
+#: prefs.js:64
 msgid "Running containers"
 msgstr ""
 
-#: prefs.js:63 lib/menu.js:309
+#: prefs.js:65 lib/menu.js:372
 msgid "Kubernetes"
 msgstr ""
 
-#: prefs.js:64
+#: prefs.js:66
 msgid "Current context; the wheel turns red for production"
 msgstr ""
 
-#: prefs.js:67
+#: prefs.js:69
 msgid "Notifications"
 msgstr ""
 
-#: prefs.js:69
+#: prefs.js:71
 msgid "At 80% and 95% of a window, once per window"
 msgstr ""
 
-#: prefs.js:70 lib/menu.js:227
+#: prefs.js:72 lib/menu.js:290
 msgid "VPN"
 msgstr ""
 
-#: prefs.js:70
+#: prefs.js:72
 msgid "When a VPN connects or disconnects"
 msgstr ""
 
-#: prefs.js:75
+#: prefs.js:77
 msgid "Updates"
 msgstr ""
 
-#: prefs.js:76
+#: prefs.js:78
 #, javascript-format
 msgid "Installed version: %s"
 msgstr ""
 
-#: prefs.js:79
+#: prefs.js:81
 msgid "Check for updates"
 msgstr ""
 
-#: prefs.js:80
+#: prefs.js:82
 msgid "Asks GitHub for new releases every 6 hours and offers them in the menu"
 msgstr ""
 
-#: prefs.js:81
+#: prefs.js:83
 msgid "Include pre-releases"
 msgstr ""
 
-#: prefs.js:86
+#: prefs.js:88
 msgid "Claude Code limits"
 msgstr ""
 
-#: prefs.js:87
+#: prefs.js:89
 msgid ""
 "Claude Code only reports its 5-hour and 7-day limits to a statusLine "
 "command. Install the tacho-statusline script from the Tacho repository and "
 "set it as the statusLine in ~/.claude/settings.json:"
 msgstr ""
 
-#: prefs.js:99
+#: prefs.js:101
 msgid "Instructions"
 msgstr ""
 
-#: prefs.js:102
+#: prefs.js:104
 msgid "Open"
 msgstr ""
 
@@ -279,173 +288,202 @@ msgstr ""
 msgid "Starting %s…"
 msgstr ""
 
-#: lib/menu.js:179
+#: lib/menu.js:179 lib/menu.js:213
 msgid "Usage"
-msgstr ""
-
-#: lib/menu.js:180
-msgid "Temperature"
 msgstr ""
 
 #: lib/menu.js:181
 msgid "Load average"
 msgstr ""
 
-#: lib/menu.js:201
-msgid "Used"
-msgstr ""
-
-#: lib/menu.js:202
-msgid "Available"
-msgstr ""
-
-#: lib/menu.js:203
-msgid "Swap"
-msgstr ""
-
-#. Translators: memory used, e.g. "8.0 GB of 16 GB (50%)".
-#: lib/menu.js:212
-#, javascript-format
-msgid "%s of %s (%s)"
+#: lib/menu.js:214
+msgid "Frequency"
 msgstr ""
 
 #: lib/menu.js:215
+msgid "Video memory"
+msgstr ""
+
+#: lib/menu.js:217
+msgid "Power"
+msgstr ""
+
+#: lib/menu.js:238
+msgid "Asleep"
+msgstr ""
+
+#: lib/menu.js:238
+msgid "in the top bar"
+msgstr ""
+
+#: lib/menu.js:243
+#, javascript-format
+msgid "%d of %d MHz"
+msgstr ""
+
+#: lib/menu.js:245 lib/menu.js:278
 #, javascript-format
 msgid "%s of %s"
 msgstr ""
 
-#: lib/menu.js:225
+#: lib/menu.js:252
+msgid "No GPU found."
+msgstr ""
+
+#: lib/menu.js:264
+msgid "Used"
+msgstr ""
+
+#: lib/menu.js:265
+msgid "Available"
+msgstr ""
+
+#: lib/menu.js:266
+msgid "Swap"
+msgstr ""
+
+#. Translators: memory used, e.g. "8.0 GB of 16 GB (50%)".
+#: lib/menu.js:275
+#, javascript-format
+msgid "%s of %s (%s)"
+msgstr ""
+
+#: lib/menu.js:288
 msgid "Download"
 msgstr ""
 
-#: lib/menu.js:226
+#: lib/menu.js:289
 msgid "Upload"
 msgstr ""
 
-#: lib/menu.js:237
+#: lib/menu.js:300
 msgid "Off"
 msgstr ""
 
-#: lib/menu.js:245
+#: lib/menu.js:308
 msgid "Tokens today"
 msgstr ""
 
-#: lib/menu.js:268
+#: lib/menu.js:331
 #, javascript-format
 msgid "%s cached"
 msgstr ""
 
-#: lib/menu.js:286
+#: lib/menu.js:349
 msgid "Claude Code not found (~/.claude)."
 msgstr ""
 
-#: lib/menu.js:287
+#: lib/menu.js:350
 msgid ""
 "Limits appear once tacho-statusline is set as Claude Code’s statusLine (see "
 "README)."
 msgstr ""
 
-#: lib/menu.js:288
+#: lib/menu.js:351
 msgid "Codex not found (~/.codex)."
 msgstr ""
 
-#: lib/menu.js:289
+#: lib/menu.js:352
 msgid "No limits reported in recent Codex sessions."
 msgstr ""
 
-#: lib/menu.js:312
+#: lib/menu.js:375
 msgid "PRODUCTION"
 msgstr ""
 
-#: lib/menu.js:317
+#: lib/menu.js:380
 msgid "Cluster"
 msgstr ""
 
-#: lib/menu.js:318
+#: lib/menu.js:381
 msgid "Namespace"
 msgstr ""
 
-#: lib/menu.js:360
+#: lib/menu.js:423
 msgid "No context in ~/.kube/config"
 msgstr ""
 
-#: lib/menu.js:377
+#: lib/menu.js:440
 #, javascript-format
 msgid "Other contexts: %s"
 msgstr ""
 
-#: lib/menu.js:383
+#: lib/menu.js:446
 #, javascript-format
 msgid "%d running / %d"
 msgstr ""
 
-#: lib/menu.js:386
+#: lib/menu.js:449
 msgid "Docker isn’t running."
 msgstr ""
 
-#: lib/menu.js:388
+#: lib/menu.js:451
 msgid ""
 "No access to the Docker socket. Add yourself to the “docker” group, then log "
 "out and back in."
 msgstr ""
 
-#: lib/menu.js:390
+#: lib/menu.js:453
 msgid "Checking Docker…"
 msgstr ""
 
-#: lib/menu.js:392
+#: lib/menu.js:455
 msgid "No containers."
 msgstr ""
 
 #. Translators: memory of all containers, then the memory Docker's engine has.
-#: lib/menu.js:401
+#: lib/menu.js:464
 #, javascript-format
 msgid "containers %s / engine %s"
 msgstr ""
 
-#: lib/menu.js:433
+#: lib/menu.js:496
 msgid "Keep awake"
 msgstr ""
 
-#: lib/menu.js:436
+#: lib/menu.js:499
 msgid "Open System Monitor"
 msgstr ""
 
-#: lib/menu.js:437
+#: lib/menu.js:500
 msgid "Tacho Settings"
 msgstr ""
 
-#: lib/menu.js:453
+#: lib/menu.js:516
 #, javascript-format
 msgid "Update Tacho to %s"
 msgstr ""
 
-#: lib/menu.js:455
+#: lib/menu.js:518
 #, javascript-format
 msgid "Downloading Tacho %s…"
 msgstr ""
 
-#: lib/menu.js:457
+#: lib/menu.js:520
 #, javascript-format
 msgid "Tacho %s installed. Log out and back in to finish."
 msgstr ""
 
-#: lib/menu.js:459
+#: lib/menu.js:522
 msgid "Update failed. Click to try again."
 msgstr ""
 
-#: lib/panel.js:55
+#: lib/panel.js:63
+msgid "off"
+msgstr ""
+
+#: lib/panel.js:70
 msgid "RAM"
 msgstr ""
 
-#: lib/panel.js:63
+#: lib/panel.js:78
 msgid "AI"
 msgstr ""
 
-#: lib/panel.js:73
+#: lib/panel.js:88
 msgid "DOCKER"
 msgstr ""
 
-#: lib/panel.js:73
+#: lib/panel.js:88
 msgid "K8S"
 msgstr ""

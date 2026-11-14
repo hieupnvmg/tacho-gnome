@@ -31,7 +31,11 @@
     </key>
     <key name="show-temp" type="b">
       <default>true</default>
-      <summary>Show CPU temperature next to CPU usage</summary>
+      <summary>Show CPU and GPU temperature next to their usage</summary>
+    </key>
+    <key name="show-gpu" type="b">
+      <default>true</default>
+      <summary>Show GPU usage</summary>
     </key>
     <key name="show-ram" type="b">
       <default>true</default>

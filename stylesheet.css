@@ -20,6 +20,10 @@
   border-radius: 4px;
 }
 
+.tacho-gpu-name {
+  font-weight: bold;
+}
+
 .tacho-column-net {
   min-width: 44px;
 }

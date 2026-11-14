@@ -289,3 +289,27 @@ test('update: versions and picking a release', () => {
     assert.equal(P.parseSha256(`${'A'.repeat(64)}  file.zip\n`), 'a'.repeat(64));
     assert.equal(P.parseSha256('nope'), null);
 });
+
+test('GPU: vendors, uevent, idle residency, nvidia-smi, panel pick', () => {
+    assert.equal(P.gpuVendor('0x8086\n'), 'Intel');
+    assert.equal(P.gpuVendor('0x10DE'), 'NVIDIA');
+    assert.equal(P.gpuVendor('0x1234'), 'GPU');
+    assert.deepEqual(P.parseUevent('DRIVER=i915\nPCI_CLASS=30000\nPCI_SLOT_NAME=0000:00:02.0\n'),
+        {driver: 'i915', slot: '0000:00:02.0'});
+    assert.equal(P.idleBusy(null, 100, 1000), null);
+    assert.equal(P.idleBusy(1000, 1750, 1000), 25);
+    assert.equal(P.idleBusy(1000, 2010, 1000), 0); // idle a hair over elapsed
+    assert.equal(P.idleBusy(5000, 10, 1000), null); // counter reset
+    const smi = P.parseNvidiaSmi(readFileSync(path.join(dir, 'nvidia-smi.csv'), 'utf8'));
+    assert.equal(smi.length, 1);
+    assert.deepEqual(smi[0], {
+        slot: '0000:01:00.0', name: 'NVIDIA GeForce RTX 4050 Laptop GPU', busy: 37,
+        memUsed: 812 * 1024 * 1024, memTotal: 6141 * 1024 * 1024, temp: 52, power: 14.21,
+    });
+    assert.equal(P.parseNvidiaSmi('00000000:01:00.0, X, [N/A], 1, 2, 3, [N/A]')[0].busy, null);
+    const intel = {id: 'i', busy: 12, discrete: false};
+    const nv = {id: 'n', busy: 12, discrete: true};
+    assert.equal(P.pickPanelGpu([intel, nv]), nv);
+    assert.equal(P.pickPanelGpu([intel, {...nv, asleep: true}]), intel);
+    assert.equal(P.pickPanelGpu([{...intel, busy: null}]), null);
+});

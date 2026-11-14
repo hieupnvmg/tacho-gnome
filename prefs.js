@@ -53,8 +53,10 @@ export default class TachoPreferences extends ExtensionPreferences {
         const readings = new Adw.PreferencesGroup({title: _('Readings')});
         page.add(readings);
         readings.add(switchRow(settings, 'show-cpu', _('CPU')));
-        readings.add(switchRow(settings, 'show-temp', _('CPU temperature'),
+        readings.add(switchRow(settings, 'show-temp', _('Temperature'),
             _('Amber from 70 °C, red from 90 °C')));
+        readings.add(switchRow(settings, 'show-gpu', _('GPU'),
+            _('Intel, AMD and NVIDIA. A sleeping NVIDIA card on a laptop is left asleep')));
         readings.add(switchRow(settings, 'show-ram', _('Memory')));
         readings.add(switchRow(settings, 'show-net', _('Network'), _('Download and upload, VPN in the menu')));
         readings.add(switchRow(settings, 'show-ai', _('AI limits'),

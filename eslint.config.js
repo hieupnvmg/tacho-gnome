@@ -23,7 +23,7 @@ export default [
     },
     {
         files: ['test/**/*.js'],
-        languageOptions: {globals: {process: 'readonly'}},
+        languageOptions: {globals: {process: 'readonly', setTimeout: 'readonly', imports: 'readonly'}},
     },
     {ignores: ['build/**']},
 ];

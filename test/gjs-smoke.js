@@ -15,6 +15,7 @@ import System from 'system';
 import {AiWatcher} from '../lib/ai.js';
 import {InfraWatcher} from '../lib/infra.js';
 import {SystemSampler} from '../lib/system.js';
+import {GpuSampler} from '../lib/gpu.js';
 
 const here = GLib.path_get_dirname(GLib.filename_from_uri(import.meta.url)[0]);
 const fixtures = `${here}/fixtures`;
@@ -140,6 +141,52 @@ async function main() {
     check(JSON.stringify(s.vpn) === '["tun0"]', `VPN interfaces (got ${JSON.stringify(s.vpn)})`);
     check(s.load?.[0] === 0.52, `load average (got ${s.load})`);
     check(sampler.cpu.values.length === 1 && sampler.down.values.length === 1, 'histories filled');
+
+    // GPUs: an Intel iGPU (RC6 idle counter), an AMD card and an NVIDIA
+    // card that is asleep, then awake, answered by a fake nvidia-smi.
+    const drm = `${root}/sys/class/drm`;
+    write(`${drm}/card0/device/uevent`, 'DRIVER=simple-framebuffer\n');
+    write(`${drm}/card1/device/uevent`, 'DRIVER=i915\nPCI_SLOT_NAME=0000:00:02.0\n');
+    write(`${drm}/card1/device/vendor`, '0x8086\n');
+    write(`${drm}/card1/gt/gt0/rc6_residency_ms`, '10000\n');
+    write(`${drm}/card1/gt/gt0/rps_act_freq_mhz`, '600\n');
+    write(`${drm}/card1/gt/gt0/rps_max_freq_mhz`, '1200\n');
+    write(`${drm}/card1-eDP-1/status`, 'connected\n');
+    write(`${drm}/card2/device/uevent`, 'DRIVER=nvidia\nPCI_SLOT_NAME=0000:01:00.0\n');
+    write(`${drm}/card2/device/vendor`, '0x10de\n');
+    write(`${drm}/card2/device/power/runtime_status`, 'suspended\n');
+    write(`${drm}/card3/device/uevent`, 'DRIVER=amdgpu\nPCI_SLOT_NAME=0000:03:00.0\n');
+    write(`${drm}/card3/device/vendor`, '0x1002\n');
+    write(`${drm}/card3/device/gpu_busy_percent`, '64\n');
+    write(`${drm}/card3/device/mem_info_vram_used`, `${2 * 1024 ** 3}\n`);
+    write(`${drm}/card3/device/mem_info_vram_total`, `${8 * 1024 ** 3}\n`);
+    write(`${drm}/card3/device/hwmon/hwmon5/temp1_input`, '61000\n');
+    write(`${drm}/card3/device/hwmon/hwmon5/power1_average`, '45500000\n');
+    const smi = `${home}/nvidia-smi`;
+    write(`${home}/smi-calls`, '');
+    write(smi, `#!/bin/sh\necho x >> ${home}/smi-calls\ncat ${fixtures}/nvidia-smi.csv\n`);
+    GLib.chmod(smi, 0o755);
+    const smiCalls = () => new TextDecoder().decode(GLib.file_get_contents(`${home}/smi-calls`)[1]).split('\n').filter(Boolean).length;
+
+    const gpu = new GpuSampler(root, smi);
+    await gpu.sample(false, null);
+    await new Promise(r => GLib.timeout_add(GLib.PRIORITY_DEFAULT, 400, () => r() ?? GLib.SOURCE_REMOVE));
+    write(`${drm}/card1/gt/gt0/rc6_residency_ms`, '10300\n'); // idle 300 ms of ~400
+    let gpus = await gpu.sample(false, null);
+    check(gpus.map(g => g.driver).join() === 'i915,nvidia,amdgpu', `GPUs found (got ${gpus.map(g => g.driver)})`);
+    const [intel, nv, amd] = gpus;
+    check(intel.busy > 5 && intel.busy < 40, `Intel busy from RC6 (got ${intel.busy?.toFixed(1)})`);
+    check(intel.freq === 600 && intel.maxFreq === 1200, 'Intel frequency');
+    check(nv.asleep && smiCalls() === 0, 'sleeping NVIDIA card is not woken (nvidia-smi not run)');
+    check(amd.busy === 64 && amd.temp === 61 && amd.power === 45.5 && amd.discrete, `AMD readings (got ${amd.busy}, ${amd.temp}, ${amd.power})`);
+    check(gpu.panel === amd, `top bar shows the busiest awake GPU (got ${gpu.panel?.driver})`);
+    write(`${drm}/card2/device/power/runtime_status`, 'active\n');
+    gpus = await gpu.sample(false, null);
+    check(smiCalls() === 1 && nv.busy === 37 && nv.temp === 52 && nv.name.includes('4050'), `awake NVIDIA read with nvidia-smi (calls ${smiCalls()}, busy ${nv.busy})`);
+    await gpu.sample(false, null);
+    check(smiCalls() === 1, 'nvidia-smi not run again within 10 s');
+    await gpu.sample(true, null);
+    check(smiCalls() === 2, 'menu open: nvidia-smi run every sample');
 
     // And this machine's real /proc, if it has one (Linux).
     const real = new SystemSampler();
