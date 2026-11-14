@@ -2,9 +2,15 @@
   "uuid": "tacho@hieupnvmg.github.io",
   "name": "Tacho",
   "description": "Gauges in the top bar: CPU and temperature, memory, network, your Claude Code and Codex limits, Docker containers and the Kubernetes context (red when it points at production).\n\nThree layouts: one combined item with graphs, separate items with graphs, or separate items without. Everything is read locally from /proc, /sys, the assistants' session logs, the Docker socket and ~/.kube/config. Nothing is sent anywhere.",
-  "shell-version": ["45", "46", "47", "48", "49"],
+  "shell-version": [
+    "45",
+    "46",
+    "47",
+    "48",
+    "49"
+  ],
   "url": "https://github.com/hieupnvmg/tacho-gnome",
   "settings-schema": "org.gnome.shell.extensions.tacho",
   "gettext-domain": "tacho@hieupnvmg.github.io",
-  "version-name": "1.0"
+  "version-name": "1.0.0"
 }
