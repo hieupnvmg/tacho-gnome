@@ -8,71 +8,67 @@
   -minimum-hpadding: 2px;
 }
 
-/* ---------- Combined: a column per reading */
+/* ---------- Top bar: a graph chip (or icon), then the value */
 
 .tacho-combined {
-  spacing: 2px;
+  spacing: 12px;
 }
-
-.tacho-column {
-  min-width: 34px;
-  padding: 0 3px;
-  border-radius: 4px;
-}
-
-.tacho-gpu-name {
-  font-weight: bold;
-}
-
-.tacho-column-net {
-  min-width: 44px;
-}
-
-.tacho-column-box {
-  spacing: 0;
-}
-
-.tacho-column-title {
-  font-size: 7.5pt;
-  font-weight: bold;
-  font-feature-settings: "tnum";
-}
-
-.tacho-column-row {
-  spacing: 3px;
-}
-
-.tacho-column-value {
-  font-size: 9pt;
-  font-weight: bold;
-  font-feature-settings: "tnum";
-}
-
-.tacho-column .tacho-kube {
-  icon-size: 11px;
-}
-
-/* ---------- Separate items */
 
 .tacho-separate {
   spacing: 0;
 }
 
-.tacho-inline {
-  spacing: 4px;
+.tacho-reading {
+  spacing: 5px;
 }
 
-.tacho-inline-value {
-  font-feature-settings: "tnum";
+.tacho-chip {
+  width: 26px;
+  height: 15px;
 }
 
 .tacho-icon {
   icon-size: 14px;
 }
 
-.tacho-sparkline {
-  width: 30px;
-  height: 16px;
+.tacho-value {
+  font-weight: bold;
+  font-feature-settings: "tnum";
+}
+
+/* Room for "100%", so neighbours do not move as the number changes. */
+.tacho-slot-cpu,
+.tacho-slot-gpu,
+.tacho-slot-ram,
+.tacho-slot-ai {
+  min-width: 2.6em;
+}
+
+.tacho-reading-cpu,
+.tacho-reading-gpu {
+  spacing: 4px;
+}
+
+.tacho-temp {
+  font-size: 0.85em;
+  font-weight: bold;
+  font-feature-settings: "tnum";
+  min-width: 1.8em;
+}
+
+.tacho-net {
+  spacing: 0;
+  min-width: 3.6em;
+}
+
+.tacho-net-line {
+  font-size: 0.68em;
+  font-weight: bold;
+  font-feature-settings: "tnum";
+}
+
+.tacho-kube {
+  icon-size: 14px;
 }
 
 /* ---------- Levels */
@@ -84,8 +80,7 @@
 
 .tacho-critical,
 .tacho-temp.tacho-critical,
-.tacho-kube.tacho-critical,
-.tacho-column-title.tacho-critical {
+.tacho-kube.tacho-critical {
   color: #e35959;
   font-weight: bold;
 }
@@ -132,7 +127,7 @@
 }
 
 .tacho-menu-graph {
-  height: 40px;
+  height: 44px;
   min-width: 300px;
 }
 
