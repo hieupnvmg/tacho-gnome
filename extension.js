@@ -45,10 +45,15 @@ class Tacho {
         this.infra = new InfraWatcher(() => this._update());
         this.keepAwake = new KeepAwake(_('Keep awake is on in Tacho'));
 
+        // Over-the-air updates: only in the build published on GitHub.
+        this.updater = null;
+        this._githubBuild = extension.metadata['update-channel'] === 'github';
+
         this._settingsId = this.settings.connect('changed', (_s, key) => this._onSetting(key));
         this._build();
         this._syncWatchers();
         this._restartTick();
+        this._syncUpdater();
     }
 
     // ------------------------------------------------------------ helpers
@@ -107,6 +112,56 @@ class Tacho {
             this._restartTick();
         } else if (key === 'notify-ai' || key === 'notify-vpn') {
             this._syncWatchers();
+        } else if (key === 'check-updates') {
+            this._syncUpdater();
+        } else if (key === 'update-prereleases') {
+            this.updater?.check();
+        }
+    }
+
+    // ------------------------------------------------------------ updates
+
+    async _syncUpdater() {
+        const want = this._githubBuild && this.settings.get_boolean('check-updates');
+        if (!want) {
+            this.updater?.destroy();
+            this.updater = null;
+            this._update();
+            return;
+        }
+        if (this.updater || this._loadingUpdater)
+            return;
+        this._loadingUpdater = true;
+        try {
+            const {Updater} = await import('./lib/updater.js');
+            if (this._cancellable.is_cancelled() || this.updater)
+                return;
+            this.updater = new Updater({
+                uuid: this._extension.uuid,
+                current: this._extension.metadata['version-name'] ?? '0',
+                settings: this.settings,
+                onChange: updater => this._onUpdaterChange(updater),
+            });
+            this.updater.start();
+        } catch (e) {
+            console.error('Tacho: could not load the updater', e);
+        } finally {
+            this._loadingUpdater = false;
+        }
+    }
+
+    _onUpdaterChange(updater) {
+        this._update();
+        const version = updater.release?.version;
+        if (updater.state === 'available' && version !== this.settings.get_string('update-notified')) {
+            this.settings.set_string('update-notified', version);
+            Main.notify(_('Tacho %s is available').format(version),
+                _('Open the Tacho menu and choose “Update Tacho” to install it.'));
+        } else if (updater.state === 'installed') {
+            Main.notify(_('Tacho %s installed').format(version),
+                _('Log out and back in to start using it.'));
+        } else if (updater.state === 'failed') {
+            Main.notify(_('Tacho could not update'), updater.error ?? '');
         }
     }
 
@@ -251,6 +306,8 @@ class Tacho {
         this._tickId = 0;
         this.settings.disconnect(this._settingsId);
         this._destroyButtons();
+        this.updater?.destroy();
+        this.updater = null;
         this.ai.destroy();
         this.infra.destroy();
         this.keepAwake.destroy();

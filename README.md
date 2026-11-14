@@ -51,16 +51,16 @@ Each reading can be switched on or off, and CPU, memory and network update every
 
 Requires GNOME Shell 45 or later (Ubuntu 23.10, 24.04 LTS, 24.10, 25.04 and later).
 
-```bash
-git clone https://github.com/hieupnvmg/tacho-gnome.git
-```
+**From the latest release** (one line; includes pre-releases, add `-s -- --stable` to skip them):
 
 ```bash
-cd tacho-gnome && make
+curl -fsSL https://raw.githubusercontent.com/hieupnvmg/tacho-gnome/main/install.sh | bash
 ```
 
+Or download `tacho@hieupnvmg.github.io.shell-extension.zip` from [Releases](https://github.com/hieupnvmg/tacho-gnome/releases) and run:
+
 ```bash
-gnome-extensions install --force build/tacho@hieupnvmg.github.io.shell-extension.zip
+gnome-extensions install --force tacho@hieupnvmg.github.io.shell-extension.zip
 ```
 
 Then **log out and back in** (on Wayland, the default on Ubuntu, GNOME Shell only picks up new extensions at login; on X11 you can press <kbd>Alt</kbd>+<kbd>F2</kbd>, type `r`, <kbd>Enter</kbd> instead), and enable it:
@@ -75,11 +75,31 @@ Or use the **Extensions** app (`sudo apt install gnome-shell-extension-manager` 
 gnome-extensions prefs tacho@hieupnvmg.github.io
 ```
 
-Building needs `make`, `zip`, `glib-compile-schemas` (package `libglib2.0-bin`) and `msgfmt` (package `gettext`):
+### Updates
+
+Copies installed from GitHub releases update over the air: every 6 hours Tacho asks GitHub for a newer release, notifies you once, and puts **Update Tacho to …** in its menu. Choosing it downloads the zip, checks its SHA-256 and installs it; log out and back in to start the new version. Turn it off, or leave out pre-releases, in Settings → Updates. This check is the only time Tacho goes online.
+
+The build for extensions.gnome.org has no updater; there, GNOME's Extensions app updates it.
+
+### Build from source
 
 ```bash
 sudo apt install make zip libglib2.0-bin gettext
 ```
+
+```bash
+git clone https://github.com/hieupnvmg/tacho-gnome.git && cd tacho-gnome && make install
+```
+
+`make` builds two zips: `build/github/` (updates itself from releases, what `make install` installs) and `build/ego/` (for extensions.gnome.org, no updater).
+
+### Releasing
+
+```bash
+./release.sh 1.1.0 "What changed" --pre
+```
+
+Sets the version in `metadata.json`, runs the tests, builds both zips, commits, tags `v1.1.0`, pushes and creates the GitHub release with the zip and its `.sha256` (drop `--pre` for a normal release). Installed copies pick it up within 6 hours. Upload `build/ego/…zip` to [extensions.gnome.org](https://extensions.gnome.org/upload/) by hand.
 
 ### Claude Code limits
 
@@ -112,7 +132,7 @@ Then in `~/.claude/settings.json`:
 
 ### Where the numbers come from
 
-Everything is read locally; Tacho sends nothing anywhere and runs no programs.
+Everything is read locally; Tacho sends nothing anywhere. The only network request is the update check (GitHub build only, can be turned off).
 
 - **CPU** `/proc/stat`, **memory** `/proc/meminfo` (MemAvailable), **network** `/proc/net/dev` (all interfaces except `lo`).
 - **Temperature** `/sys/class/hwmon` — `coretemp` package, `k10temp`/`zenpower` Tctl — falling back to `/sys/class/thermal`.
@@ -174,20 +194,16 @@ Có thể bật/tắt từng chỉ số; CPU, bộ nhớ và mạng cập nhật
 
 Cần GNOME Shell 45 trở lên (Ubuntu 23.10, 24.04 LTS, 24.10, 25.04 trở lên).
 
-```bash
-sudo apt install make zip libglib2.0-bin gettext
-```
+**Từ bản release mới nhất** (một dòng; có cả pre-release, thêm `-s -- --stable` để bỏ qua):
 
 ```bash
-git clone https://github.com/hieupnvmg/tacho-gnome.git
+curl -fsSL https://raw.githubusercontent.com/hieupnvmg/tacho-gnome/main/install.sh | bash
 ```
 
-```bash
-cd tacho-gnome && make
-```
+Hoặc tải `tacho@hieupnvmg.github.io.shell-extension.zip` ở [Releases](https://github.com/hieupnvmg/tacho-gnome/releases) rồi chạy:
 
 ```bash
-gnome-extensions install --force build/tacho@hieupnvmg.github.io.shell-extension.zip
+gnome-extensions install --force tacho@hieupnvmg.github.io.shell-extension.zip
 ```
 
 Sau đó **đăng xuất rồi đăng nhập lại** (trên Wayland, mặc định của Ubuntu, GNOME Shell chỉ nhận extension mới khi đăng nhập; trên X11 có thể bấm <kbd>Alt</kbd>+<kbd>F2</kbd>, gõ `r`, <kbd>Enter</kbd>), rồi bật:
@@ -201,6 +217,30 @@ Mở cài đặt:
 ```bash
 gnome-extensions prefs tacho@hieupnvmg.github.io
 ```
+
+### Cập nhật
+
+Bản cài từ GitHub release tự cập nhật (OTA): cứ 6 giờ Tacho hỏi GitHub có bản mới không, báo một lần và hiện **Cập nhật Tacho lên …** trong menu. Bấm vào thì nó tải zip, kiểm SHA-256 và cài; đăng xuất rồi đăng nhập lại để dùng bản mới. Tắt hoặc bỏ qua pre-release trong Cài đặt → Cập nhật. Đây là lần duy nhất Tacho lên mạng.
+
+Bản cho extensions.gnome.org không có phần tự cập nhật; ở đó ứng dụng Extensions của GNOME lo việc cập nhật.
+
+### Build từ mã nguồn
+
+```bash
+sudo apt install make zip libglib2.0-bin gettext
+```
+
+```bash
+git clone https://github.com/hieupnvmg/tacho-gnome.git && cd tacho-gnome && make install
+```
+
+### Phát hành
+
+```bash
+./release.sh 1.1.0 "Thay đổi gì" --pre
+```
+
+Đặt version trong `metadata.json`, chạy test, build hai zip, commit, gắn tag `v1.1.0`, push và tạo GitHub release kèm zip và `.sha256` (bỏ `--pre` cho bản chính thức). Các máy đã cài sẽ thấy bản mới trong vòng 6 giờ. File `build/ego/…zip` thì tự tải lên [extensions.gnome.org](https://extensions.gnome.org/upload/).
 
 ### Hạn mức Claude Code
 
@@ -233,7 +273,7 @@ Rồi trong `~/.claude/settings.json`:
 
 ### Số liệu lấy từ đâu
 
-Mọi thứ đọc trên máy; Tacho không gửi gì đi đâu và không chạy chương trình nào.
+Mọi thứ đọc trên máy; Tacho không gửi gì đi đâu. Lần lên mạng duy nhất là kiểm tra cập nhật (chỉ bản GitHub, tắt được).
 
 - **CPU** `/proc/stat`, **bộ nhớ** `/proc/meminfo` (MemAvailable), **mạng** `/proc/net/dev` (mọi interface trừ `lo`).
 - **Nhiệt độ** `/sys/class/hwmon` (`coretemp` package, `k10temp`/`zenpower` Tctl), nếu không có thì `/sys/class/thermal`.

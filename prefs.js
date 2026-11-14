@@ -69,6 +69,18 @@ export default class TachoPreferences extends ExtensionPreferences {
         alerts.add(switchRow(settings, 'notify-ai', _('AI limits'), _('At 80% and 95% of a window, once per window')));
         alerts.add(switchRow(settings, 'notify-vpn', _('VPN'), _('When a VPN connects or disconnects')));
 
+        // Updates: only the GitHub build updates itself.
+        if (this.metadata['update-channel'] === 'github') {
+            const updates = new Adw.PreferencesGroup({
+                title: _('Updates'),
+                description: _('Installed version: %s').format(this.metadata['version-name'] ?? '?'),
+            });
+            page.add(updates);
+            updates.add(switchRow(settings, 'check-updates', _('Check for updates'),
+                _('Asks GitHub for new releases every 6 hours and offers them in the menu')));
+            updates.add(switchRow(settings, 'update-prereleases', _('Include pre-releases')));
+        }
+
         // Claude Code help
         const claude = new Adw.PreferencesGroup({
             title: _('Claude Code limits'),

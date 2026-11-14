@@ -262,3 +262,30 @@ test('graph key changes only when the drawing would', () => {
     assert.deepEqual(h.values, [2, 3, 4]);
     assert.equal(h.max(), 4);
 });
+
+test('update: versions and picking a release', () => {
+    assert.deepEqual(P.parseVersion('v1.2.0'), [1, 2, 0]);
+    assert.equal(P.parseVersion('1.0-beta'), null);
+    assert.ok(P.compareVersions('1.0.1', '1.0') > 0);
+    assert.equal(P.compareVersions('v1.0.0', '1.0'), 0);
+    assert.ok(P.compareVersions('1.9', '1.10') < 0);
+    const zip = 'tacho@hieupnvmg.github.io.shell-extension.zip';
+    const asset = (v, extra = []) => [{name: zip, browser_download_url: `https://x/${v}/${zip}`},
+        {name: `${zip}.sha256`, browser_download_url: `https://x/${v}/${zip}.sha256`}, ...extra];
+    const releases = [
+        {tag_name: 'v1.2.0', prerelease: true, assets: asset('1.2.0'), html_url: 'u12'},
+        {tag_name: 'v1.1.0', prerelease: false, assets: asset('1.1.0')},
+        {tag_name: 'v1.3.0', draft: true, assets: asset('1.3.0')},
+        {tag_name: 'v1.4.0', assets: []}, // no zip attached
+        {tag_name: 'v0.9.0', assets: asset('0.9.0')},
+    ];
+    const pre = P.pickRelease(releases, '1.0', zip, true);
+    assert.equal(pre.version, '1.2.0');
+    assert.equal(pre.prerelease, true);
+    assert.equal(pre.shaUrl, `https://x/1.2.0/${zip}.sha256`);
+    assert.equal(P.pickRelease(releases, '1.0', zip, false).version, '1.1.0');
+    assert.equal(P.pickRelease(releases, '1.2.0', zip, true), null);
+    assert.equal(P.pickRelease({message: 'rate limited'}, '1.0', zip, true), null);
+    assert.equal(P.parseSha256(`${'A'.repeat(64)}  file.zip\n`), 'a'.repeat(64));
+    assert.equal(P.parseSha256('nope'), null);
+});

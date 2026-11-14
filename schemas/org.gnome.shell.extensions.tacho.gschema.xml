@@ -61,6 +61,18 @@
       <default>true</default>
       <summary>Notify when a VPN connects or disconnects</summary>
     </key>
+    <key name="check-updates" type="b">
+      <default>true</default>
+      <summary>Check GitHub for new versions (GitHub build only)</summary>
+    </key>
+    <key name="update-prereleases" type="b">
+      <default>true</default>
+      <summary>Offer pre-releases too</summary>
+    </key>
+    <key name="update-notified" type="s">
+      <default>''</default>
+      <summary>Internal: the last version a notification was shown for</summary>
+    </key>
     <key name="ai-alerts-sent" type="as">
       <default>[]</default>
       <summary>Internal: AI limit alerts already sent, so they are not repeated</summary>
