@@ -13,5 +13,5 @@
   "url": "https://github.com/hieupnvmg/tacho-gnome",
   "settings-schema": "org.gnome.shell.extensions.tacho",
   "gettext-domain": "tacho@hieupnvmg.github.io",
-  "version-name": "1.0.1"
+  "version-name": "1.1.0"
 }
